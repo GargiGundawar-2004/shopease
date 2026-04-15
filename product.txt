@@ -1,0 +1,1 @@
+echo "Product listing UI" >> product.txt
