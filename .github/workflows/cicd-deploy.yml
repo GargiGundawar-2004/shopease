@@ -1,0 +1,78 @@
+
+name: CI-CD Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: Environment to deploy
+        required: true
+        default: uat
+        type: choice
+        options:
+          - uat
+          - prod
+
+permissions:
+  contents: read
+  actions: read
+  deployments: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Backend checks
+        run: |
+          if [ -f backend/package.json ]; then
+            cd backend
+            npm ci
+            npm test --if-present
+            npm run build --if-present
+          else
+            echo "No backend/package.json found, skipping Node backend checks"
+          fi
+
+      - name: Frontend checks
+        run: |
+          if [ -f frontent/package.json ]; then
+            cd frontent
+            npm ci
+            npm test --if-present
+            npm run build --if-present
+          else
+            echo "No frontent/package.json found, skipping Node frontend checks"
+          fi
+
+  deploy-uat:
+    needs: ci
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && github.event.inputs.target_env == 'uat')
+    runs-on: ubuntu-latest
+    environment:
+      name: uat
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy to UAT
+        run: |
+          echo "Deploying to UAT"
+          echo "Replace with your real deploy command"
+
+  deploy-prod:
+    needs: ci
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.target_env == 'prod'
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy to PROD
+        run: |
+          echo "Deploying to PROD"
+          echo "Replace with your real deploy command"
