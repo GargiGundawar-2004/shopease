@@ -1,4 +1,8 @@
 // wishlist.js
+
 function addToWishlist(productId) {
-    console.log("Added to wishlist:", productId);
+    if (!productId) {
+        throw new Error("Invalid product");
+    }
+    console.log("Wishlist updated:", productId);
 }
