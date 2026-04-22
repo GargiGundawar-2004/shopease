@@ -18,7 +18,15 @@ def process_payment(amount):
 import logging
 
 def handle_payment(amount):
+    """
+    Process payment safely
+    """
     if amount <= 0:
-        logging.error("Invalid payment amount")
-        raise ValueError("Amount must be greater than zero")
+        raise ValueError("Invalid amount")
     return "Success"
+
+def test_payment():
+    assert handle_payment(10) == "Success"
+
+def calculate_discount(price, discount):
+    return price - (price * discount / 100)
