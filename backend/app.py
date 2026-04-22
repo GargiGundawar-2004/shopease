@@ -8,3 +8,8 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# backend/app.py
+def process_payment(amount):
+    if amount > 0:
+        return "Success"
