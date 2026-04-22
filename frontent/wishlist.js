@@ -1,8 +1,12 @@
 // wishlist.js
 
-function addToWishlist(productId) {
+async function addToWishlist(productId) {
     if (!productId) {
         throw new Error("Invalid product");
     }
-    console.log("Wishlist updated:", productId);
+
+    await fetch('/api/wishlist', {
+        method: 'POST',
+        body: JSON.stringify({ productId })
+    });
 }
