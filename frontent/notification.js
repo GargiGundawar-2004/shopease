@@ -1,8 +1,9 @@
-function showNotification(message) {
-    if (!message) {
-        console.error("No message provided");
-        return;
-    }
+function showNotification(message, type = "info") {
+    const div = document.createElement("div");
+    div.className = "notification " + type;
+    div.innerText = message;
 
-    alert(message); // simple UI
+    document.body.appendChild(div);
+
+    setTimeout(() => div.remove(), 3000);
 }
