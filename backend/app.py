@@ -47,3 +47,12 @@ def divide(a: int, b: int):
         raise HTTPException(status_code=400, detail="Division by zero not allowed")
     
     return {"result": a / b}
+
+
+# backend/app.py
+def process_payment():
+    success = False
+    if not success:
+        return {"status": "failed"}
+    return {"status": "success"}
+
