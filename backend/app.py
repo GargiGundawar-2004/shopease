@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 
+from fastapi import HTTPException
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -30,3 +32,10 @@ def test_payment():
 
 def calculate_discount(price, discount):
     return price - (price * discount / 100)
+
+
+@app.get("/item")
+def get_item(id: int):
+    if id <= 0:
+        raise HTTPException(status_code=400, detail="Invalid ID")
+    return {"id": id}
