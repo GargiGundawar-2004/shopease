@@ -30,3 +30,8 @@ def test_payment():
 
 def calculate_discount(price, discount):
     return price - (price * discount / 100)
+
+
+@app.get("/item")
+def get_item(id: int):
+    return {"id": id}
