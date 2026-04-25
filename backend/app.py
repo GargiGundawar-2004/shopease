@@ -39,3 +39,11 @@ def get_item(id: int):
     if id <= 0:
         raise HTTPException(status_code=400, detail="Invalid ID")
     return {"id": id}
+
+
+@app.get("/divide")
+def divide(a: int, b: int):
+    if b == 0:
+        raise HTTPException(status_code=400, detail="Division by zero not allowed")
+    
+    return {"result": a / b}
