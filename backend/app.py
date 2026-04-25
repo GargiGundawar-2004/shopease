@@ -65,4 +65,13 @@ def process_payment():
 
     return {"status": "failed after retries"}
 
-    
+
+
+# backend/app.py
+@app.get("/orders")
+def get_orders():
+    orders = [
+        {"id": 1, "item": "Shoes"},
+        {"id": 2, "item": "Bag"}
+    ]
+    return {"orders": orders}
